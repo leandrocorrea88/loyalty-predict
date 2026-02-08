@@ -1,0 +1,32 @@
+Vamos começar a explorar alguns indicadores a partir da base de dados de loyalty system. Essa base
+contém as transções que acontecem na plataforma da twitch. Os usuários ativos são medidos através
+dos pontos obtidos na plataforma.
+
+O publico alvo das análises é o usuário ativo nas redes, medido através dos pontos conquistados nas
+seguintes situações:
+    
+    1. 1 msg no chat : 1 pto
+    2. Enviando um !presente : 5 ptos
+    3. Alcançando 5 dias seguidos de !presente : 100 ptos (aditivos por cada streak)
+        - streak : !presente em 5 dias seguidos
+
+Métricas de Negócio :
+
+    1. DAU (Daily Active Users) : Usuários ativos no dia, medido pela quantidade de pontos
+
+        - É bastante sensível ao capturar alta granularidade
+        - Nessa granularidade de abertura é possível perceber que após os cursos há
+        uma elevação da media diaria de DAU
+        - Alavancas do DAU :
+
+            - Trazer mais gente pra live/mar aberto (aumentar o topo do funil)
+            - Aumentar a permanencia dos usuários ativos
+
+    2. MAU (Monthly Active Users) : Usuários ativos no mês, medido pelo mesmo critério do DAU
+
+        - É menos sensível que o DAU pois agrega o valor no mês
+        - Deve ser calculada em janelas moveis de 28 dias (4 semanas completas, o que garante que
+        estamos olhando sempre 4 AMOSTRAS DE CADA DIA DA SEMANA)
+        - Cada dia reflete a janela de 28 dias para tras, então quedas nessa métrica são esperadas
+        quando uma janela de um pico de DAU se extingue sem manutenção dos usuários ativos
+        
