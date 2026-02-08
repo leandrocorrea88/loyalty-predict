@@ -30,3 +30,41 @@ Métricas de Negócio :
         - Cada dia reflete a janela de 28 dias para tras, então quedas nessa métrica são esperadas
         quando uma janela de um pico de DAU se extingue sem manutenção dos usuários ativos
         
+Ciclo de Vida do usuário
+
+    A ideia aqui é enxergar o tempo de vida do usuário a partir do primeiro momento em que o Cliente
+    foi detectado na base de dados. Vamos considerar algumas outras métricas para compor nossos 
+    grupos de usuários.
+
+    Permite fazer a gestão do cliente de acordo com o momento dele em nosso ecossistema
+
+    (a) Idade na base : Tempo desde a primeira transação (ao ultrapassar o status de Novo o Cliente
+    não consegue mais voltar ao status anterior)
+    
+        - Novos (0-7 dias)
+        - Antigos (7+ d)
+    
+    (b) Recência : Quantidade de dias desde a última interação (os status de recência podem ser 
+    modificados ao longo do tempo, então o mesmo usuario pode transitar mais de uma vez em cada
+    uma dessas classificações)
+
+        Movimentos a montante: 
+            
+            - Fiel/Engajado (0-7 d) 
+            - Turista (7-15 d) 
+            - Desencantado (15-28d) 
+            - Churn/Zumbi (28+ d)
+        
+        Movimentos a jusante
+
+            - Turista -> Fiel : Loop irrelevante pro modelo
+            - Desencantado -> Fiel : Reconquistado 
+            - Churn -> Fiel : Renascido
+    
+    A curva de recência pode ser CALCULADA USANDO UMA CURVA DE SOBREVIVÊNCIA
+    
+    Fontes de dados para calculo das metricas
+
+        (a) Idade na base : data da primeira transação
+        (b) Ultima transação : calcular a recência do usuário (movimento recência a montante)
+        (c) Penultima transação : calcular a recência o usuário (movimento recência a jusante?)
