@@ -75,7 +75,7 @@ tb_life_cycle AS (
             WHEN qtdeDiasUltTransacao <= 7 AND (qtdeDiasPenultTransacao - qtdeDiasUltTransacao) >= 28 THEN '02-RENASCIDO'
             WHEN qtdeDiasUltTransacao BETWEEN 8 AND 14 THEN '03-TURISTA'
             WHEN qtdeDiasUltTransacao BETWEEN 15 AND 28 THEN '04-DESENCANTADO'
-            WHEN qtdeDiasUltTransacao >= 28 THEN '05-ZUMBI'
+            WHEN qtdeDiasUltTransacao > 28 THEN '05-ZUMBI'
         END AS descLifeCycle 
     FROM
         tb_idade AS t1

@@ -68,3 +68,20 @@ Ciclo de Vida do usuário
         (a) Idade na base : data da primeira transação
         (b) Ultima transação : calcular a recência do usuário (movimento recência a montante)
         (c) Penultima transação : calcular a recência o usuário (movimento recência a jusante?)
+
+Frequência e Valor
+
+    Essas dimensões estimam a INTENSIDADE do engajamento do cliente com a marca, por exemplo:
+
+        - O cliente engaja em um ou mais produtos?
+        - O cliente compra ou engaja quantas vezes ao mes?
+        - O cliente interage com alto ou baixo valor?
+    
+    A Frequência pode ser calculada em DIAS ou quantidade de TRANSAÇÕES
+
+        - A frequencia deve ser calculada dentro do espaço de base ativa (ou no caso de ecomm pode-se
+        usar o período do MAU como referencia). Olhar para alem disso distorce a análise ao considerar
+        um comportamento fora da metrica alvo ou ate mesmo fora do que faz sentido analisar, ja que
+        estamos olhanndo a intensidade de relacionamento DOS QUE SE RELACIONAM
+
+    O Valor pode ser calculado no ACUMULADO ou parametrizado por TRANSAÇÃO
