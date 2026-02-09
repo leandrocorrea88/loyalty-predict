@@ -9,6 +9,9 @@
     Zumbi           > 28d
     Reconquistado   <= 7d           15d >= X >= 28d 
     Renascido       <= 7d           > 28d
+
+Essa query é a copia da anterior, com a DATA como PARAMETRO
+
 */
 WITH
 tb_daily AS (
@@ -20,7 +23,8 @@ tb_daily AS (
     FROM transacoes
     -- Inserimos aqui uma variável para fazer o loop e tirar as fotos em cada mes. Usamos o simbolo 
     -- < e não <= para poder pegar as transações que ocorreram até as 23h59 do dia anterior
-    WHERE DtCriacao < '2024-02-01'
+    -- Inserimos aqui o parâmetro para ser consumido pelo Python
+    WHERE DtCriacao < '{_date}'
 ) ,
 
 tb_Idade AS(
@@ -31,8 +35,8 @@ tb_Idade AS(
         -- MIN(dtDia) AS dtPrimTransacao ,
         -- MAX(dtDia) AS dtUltTransacao ,
         -- Calculamos o MAX/MIN porque a linha anterior faz o calculo por transação (por DAU)
-        CAST(MAX(JULIANDAY('2024-02-01') - JULIANDAY(dtDia)) AS INT) AS qtdeDiasPrimTransacao ,
-        CAST(MIN(JULIANDAY('2024-02-01') - JULIANDAY(dtDia)) AS INT) AS qtdeDiasUltTransacao
+        CAST(MAX(JULIANDAY('{_date}') - JULIANDAY(dtDia)) AS INT) AS qtdeDiasPrimTransacao ,
+        CAST(MIN(JULIANDAY('{_date}') - JULIANDAY(dtDia)) AS INT) AS qtdeDiasUltTransacao
 
     FROM
         tb_daily
@@ -52,7 +56,7 @@ tb_penultima_ativacao AS (
 -- Capturar a penultima ativação de cada usuário.
     SELECT 
         * ,
-        CAST(JULIANDAY('2024-02-01') - JULIANDAY(dtDia) AS INT) AS qtdeDiasPenultTransacao
+        CAST(JULIANDAY('{_date}') - JULIANDAY(dtDia) AS INT) AS qtdeDiasPenultTransacao
     FROM tb_rn 
     WHERE rnDia = 2
 ) ,
@@ -82,7 +86,8 @@ tb_life_cycle AS (
 
 SELECT
     -- Botar a marcação da data de corte
-    DATE('2024-02-01' , '-1 DAY') as dtRef,
+    -- Inserimos aqui o parâmetro para ser consumido pelo Python
+    DATE('{_date}' , '-1 DAY') as dtRef,
     *
 FROM
     tb_life_cycle

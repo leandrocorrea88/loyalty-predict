@@ -11,6 +11,12 @@
             "driver": "SQLite",
             "name": "education-platform",
             "database": "${workspaceFolder:loyalty-predict}/data/education-platform/database.db"
+        },
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "loyalty-analytical",
+            "database": "${workspaceFolder:loyalty-predict}/data/analytics/database.db"
         }
     ]
 }
