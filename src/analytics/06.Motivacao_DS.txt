@@ -1,0 +1,67 @@
+Agora que conseguimos entender o negócio e um pouco do perfil dos usuários temos condições de avançar
+um pouco mais no projeto e começar a pensar no nosso desafio de Data Science, de fato.
+
+O que temos até então?
+
+    1. Classificamos os clientes com base na Recência e traçamos um Ciclo de Vida do usuários
+    
+    2. Avaliamos o comportamento de Frequencia e Valor e criamos clusters que traduzem a intensidade
+    com a qual os usuários estão se relacionando (egajando) nas redes sociais
+
+    3. Com base no dia 31-01-26 sabemos que temos o seguinte perfil do MAU (283 usuários)
+
+        Status Recencia         Usuarios        %
+        -----------------       --------        -----
+        01-CURIOSO              9               3,2
+        02-FIEL                 74              26,1
+        02-RECONQUISTADO        13              4,6
+        02-RENASCIDO            22              7,8
+        03-TURISTA              17              6,0
+        04-DESENCANTADO         148             52,3
+    
+        A partir dessas estatísticas sabemos que o nosso desejo é que o número de usuários engajados
+        aumente, ou seja, em nosso caso estamos falando do grupo 02-FIEL
+    
+Então, qual é o nosso objetivo?
+
+    >> Como aumentar o número de usuários fiéis?
+
+E para isso podemos começar a levantar hipóteses de fatores que nos ajudem a alcançar esses objetivos
+através dos dados, como:
+
+    Existe uma ou mais informções que nos ajudam a entender se um usuário vai se tornar fiel no
+    proximo ciclo de MAU (28 dias)?
+
+    1. Feature Store : Usuários - Transacional
+    
+    [X] Frequência em dias (D7 , D14 , D28 , D56, Vida)
+    [X] Frequência em transações (D7 , D14 , D28 , D56, Vida)
+    [X] Valor de Pontos [posit, negat, saldo] (D7 , D14 , D28 , D56, Vida)
+    [X] Quantidade de transações por dia (D7 , D14 , D28 , D56)
+    [X] Percentual de ativação Do MAU
+    [X] Horas assistidas (D7 , D14 , D28 , D56)
+    [X] Media de intervalo entre os dias que o usuário aparece (D28, Vida)
+    [X] Periodo que assiste a live (share de periodo)
+    [X] Tipos de produtos consumidos
+    [ ] Idade na base
+    
+    2. Feature Store : Usuários - Plataforma de Cursos
+        
+    [ ] Cursos completos na plataforma (Quantidade e Quais)
+    [ ] Cursos iniciados na plataforma (Quantidade e Quais)
+    [ ] Dias desde a ultima interação na plataforma de cursos
+    [ ] Tipo de Conteudo consumido
+    [ ] Nivel das habilidade atuais (PDI - Match com senioridade)
+        
+    3. Feature Store : Usuarios - Ciclo de Vida
+        
+    [ ] Já foi zumbi? (flag)
+    [ ] Ciclo de vida no MAU de D-28
+    [ ] Ciclo de vida atual
+    [ ] Quantidade de dias em cada status do ciclo de vida
+    [ ] Razão entre a frequencia em D28 vs média do ciclo de vida PROPRIO
+    [ ] Razão entre a frequencia em D28 vs média do ciclo de vida CLUSTER
+    [ ] Posição do usuário no seu cluster de ciclo de vida
+    [ ] Resgates de pontos (Frequencia e Valor)
+
+    
