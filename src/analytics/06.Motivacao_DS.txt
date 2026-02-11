@@ -43,14 +43,13 @@ através dos dados, como:
     [X] Media de intervalo entre os dias que o usuário aparece (D28, Vida)
     [X] Periodo que assiste a live (share de periodo)
     [X] Tipos de produtos consumidos
-    [ ] Idade na base
+    [X] Idade na base
     
     2. Feature Store : Usuários - Plataforma de Cursos
         
-    [ ] Cursos completos na plataforma (Quantidade e Quais)
-    [ ] Cursos iniciados na plataforma (Quantidade e Quais)
+    [X] Cursos completos na plataforma (Quantidade e Quais)
+    [X] Cursos iniciados na plataforma (Quantidade e Quais)
     [ ] Dias desde a ultima interação na plataforma de cursos
-    [ ] Tipo de Conteudo consumido
     [ ] Nivel das habilidade atuais (PDI - Match com senioridade)
         
     3. Feature Store : Usuarios - Ciclo de Vida
