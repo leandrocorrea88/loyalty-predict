@@ -22,18 +22,18 @@ tb_transacao_base AS(
             -- UPDATE: Coluna adicionada para facilitar captura de "Periodo em que assiste a Live"
             , CAST(STRFTIME('%H', t.DtCriacao) AS INT) as dtHora
     FROM    transacoes t CROSS JOIN vars v
-    WHERE   DATE(t.DtCriacao) IS NOT NULL
+    WHERE   DATE(v.data_corte) IS NOT NULL
             AND DATE(t.DtCriacao) < v.data_corte
 ) ,
 
 -- ALIAS : agg
 tb_agg_transacao AS (
     -- Agregações simples da base de transações. CTE base para calculos sobre agregações
-    -- Frequência em dias (D7 , D14 , D28 , D56, Vida)
-    -- Frequência em transações (D7 , D14 , D28 , D56, Vida)
-    -- Valor de Pontos [posit, negat, saldo] (D7 , D14 , D28 , D56, Vida)
-    -- UPDATE: Periodo que assiste a live (share de periodo)
-    -- UPDATE: Idade na base
+    -- [ ] Frequência em dias (D7 , D14 , D28 , D56, Vida)
+    -- [ ] Frequência em transações (D7 , D14 , D28 , D56, Vida)
+    -- [ ] Valor de Pontos [posit, negat, saldo] (D7 , D14 , D28 , D56, Vida)
+    -- [ ] Periodo que assiste a live (share de periodo) [UPDATE]
+    -- [ ] Idade na base [UPDATE]
     SELECT  tr.IdCliente
             -- Idade na Base -> Data da Primeira transação
             , MAX(JULIANDAY(tr.dtCorte) - JULIANDAY(tr.dtDia)) AS idadeDias
@@ -95,8 +95,8 @@ tb_agg_transacao AS (
 -- ALIAS: agg_calc
 tb_agg_calculado AS (
     -- Calculos sobre agregações das transações
-    -- Quantidade de transações por dia (D7 , D14 , D28 , D56)
-    -- Percentual de ativação Do MAU
+    -- [ ] Quantidade de transações por dia (D7 , D14 , D28 , D56)
+    -- [ ] Percentual de ativação Do MAU
     SELECT  agg.*
             -- Multiplicar por "1." para tranformar em FLOAT e encapsular em COALESCE para tratar os NULOS como ZERO
             -- Como COLAESCE não trata divisão por zero vamos tratar manualmente com NULLIF
@@ -114,7 +114,7 @@ tb_agg_calculado AS (
 
 -- ALIAS hr_d
 tb_horas_dia AS(
-    -- Horas assistidas (D7 , D14 , D28 , D56) : PARTE 1
+    -- [ ] Horas assistidas (D7 , D14 , D28 , D56) : PARTE 1
     SELECT  tr.IdCliente
             , tr.dtDia
             -- Capturar a primeira e ultima transações no dia. 
@@ -132,7 +132,7 @@ tb_horas_dia AS(
 
 -- ALIAS : hr_u
 tb_horas_usuario AS(
-    -- Horas assistidas (D7 , D14 , D28 , D56) : PARTE 2
+    -- [ ] Horas assistidas (D7 , D14 , D28 , D56) : PARTE 2
     SELECT  hr_d.IdCliente
             , SUM(hr_d.duracao) AS qtdeHorasVida
             , SUM(CASE WHEN hr_d.dtDia >= DATE(hr_d.dtCorte , '-7 days') THEN hr_d.duracao ELSE 0 END ) AS qtdeHorasD7
@@ -145,7 +145,7 @@ tb_horas_usuario AS(
 
 --ALIAS : lag_d
 tb_lag_dia AS(
-    -- Media de intervalo entre os dias que o usuário aparece : PARTE 1
+    -- [ ] Media de intervalo entre os dias que o usuário aparece : PARTE 1
     -- Vamos usar a horas_dia porque ela JA FEZ O FILTRO DOS DIAS QUE O USUÁRIO APARECEU
     -- PREMISSA: Consideramos o dia quando já transação
     SELECT  hr_d.IdCliente
@@ -157,7 +157,7 @@ tb_lag_dia AS(
 
 -- ALIAS : int_d
 tb_intervalo_dias AS(
-    -- Media de intervalo entre os dias que o usuário aparece : PARTE 2
+    -- [ ] Media de intervalo entre os dias que o usuário aparece : PARTE 2
     SELECT  lag_d.IdCliente
             -- Diferença de dias linha a linha
             --, JULIANDAY(lag_d.dtDia) - JULIANDAY(lag_d.lagDia) AS diifDia
@@ -188,7 +188,7 @@ tb_share_produtos AS(
         devemos ter em mente que nem todos os produtos estarão mapeados
         
         */
-        -- Tipos de produtos consumidos (essa abertura permite posterior ANALISE DE CLUSTERING DE USUÁRIOS)
+        -- [ ] Tipos de produtos consumidos (essa abertura permite posterior ANALISE DE CLUSTERING DE USUÁRIOS)
         SELECT  tr.IdCliente
                 -- Agrupando as CATEGORIAS
                 , 1. * COUNT(CASE WHEN t3.DescCategoriaProduto = 'rpg' THEN tr.IdTransacao END) / COUNT(DISTINCT tr.IdTransacao) AS qtdeRPG
