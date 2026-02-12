@@ -30,7 +30,9 @@ vars AS(
     SELECT
         -- Parâmetro reduz risco de SQL injection. Caso seja fornecido um parâmetro
         -- que não possa ser convertido a data se torna NULA e zera os resultados
-        DATE('2025-10-01') as data_corte
+        -- Após as validações mudamos de hardcode para parametrizado
+        DATE('{_date}') as data_corte
+        --DATE('2025-10-01') as data_corte
 ) ,
 
 -- ALIAS : cu_epi

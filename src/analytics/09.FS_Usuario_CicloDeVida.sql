@@ -14,8 +14,10 @@ vars AS (
         -- A base analítica está montada com base no ultimo dia de cada mês, mas o parâmetro tende
         -- a ser o primeiro dia do mes subsequente
         SELECT 
-                DATE('2026-02-01') AS data_corte
-                --, DATE('2026-02-01' , '-1 days') AS data_corte
+                -- Após as validações mudamos de hardcode para parametrizado
+                DATE('{_date}') as data_corte
+                --DATE('2026-02-01') AS data_corte
+                
 ) ,
 
 -- ALIAS : lc_at
