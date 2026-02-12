@@ -54,9 +54,9 @@ através dos dados, como:
         
     3. Feature Store : Usuarios - Ciclo de Vida
         
+    [X] Ciclo de vida atual
+    [X] Ciclo de vida no MAU de D-28
     [ ] Já foi zumbi? (flag)
-    [ ] Ciclo de vida no MAU de D-28
-    [ ] Ciclo de vida atual
     [ ] Quantidade de dias em cada status do ciclo de vida
     [ ] Razão entre a frequencia em D28 vs média do ciclo de vida PROPRIO
     [ ] Razão entre a frequencia em D28 vs média do ciclo de vida CLUSTER
