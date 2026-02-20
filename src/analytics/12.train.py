@@ -446,15 +446,19 @@ X_train_transform.columns = X_train_transform.columns.map(str)
 
 # %%
 # Rodamos a descritiva novamente para ver os tratamentos
-s_na = print(X_train_transform.dtypes.to_string()).isna().mean()
+s_na = X_train_transform.isna().mean()
 s_na[s_na>0].index.tolist()
 # %%
 
 # MODEL
 
 from sklearn import tree
+from sklearn import ensemble
 
-model = tree.DecisionTreeClassifier(random_state=42)
+# model = tree.DecisionTreeClassifier(random_state=42)
+model = ensemble.RandomForestClassifier(n_estimators=150 ,
+                                        min_samples_leaf=30,
+                                        n_jobs=-1)
 model.fit(X_train_transform , y_train)
 # %%
 
@@ -466,7 +470,8 @@ import scikitplot as skplot
 y_pred_train = model.predict(X_train_transform)
 y_proba_train = model.predict_proba(X_train_transform)
 
-skplot.metrics.plot_confusion_matrix(y_train , y_pred_train)
+metrics.accuracy_score(y_train , y_pred_train)
+metrics.roc_auc_score(y_train , y_score=y_proba_train[:,1])
 
 # %%
 
